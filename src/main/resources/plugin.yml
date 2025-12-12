@@ -1,0 +1,23 @@
+name: makispl
+version: '1.0-SNAPSHOT'
+main: org.example.makispl.makispl.Makispl
+api-version: '1.21'
+commands:
+  gethearts:
+    description: Command that gets a players hearts
+    permission: makispl.gethearts
+    permission-message: Secret!!!
+  getcoords:
+    permission: makispl.getcoords
+permissions:
+  makispl.gethearts:
+    description: Allows someone to do /gethearts
+    default: op
+  makispl.getcoords:
+    default: op
+  makispl.listplayers:
+    default: op
+  listplayers:
+    description: Lists players.
+    permission: makispl.listplayers
+
