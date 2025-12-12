@@ -1,4 +1,4 @@
-import org.example.makispl.makispl.Makispl;
+package org.example.makispl.makispl;
 
 public class CustomCrafting {
     Makispl plugin;

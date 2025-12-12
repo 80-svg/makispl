@@ -1,4 +1,4 @@
-package org.example.makispl.makispl;
+package org.example.makispl.makispl.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

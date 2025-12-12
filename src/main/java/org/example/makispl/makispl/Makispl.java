@@ -15,7 +15,6 @@ import net.dv8tion.jda.api.JDABuilder;
 //import net.dv8tion.jda.api.components.buttons.Button;
 //import net.dv8tion.jda.api.entities.Member;
 //import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 //import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 //import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -37,8 +36,6 @@ import org.bukkit.Bukkit;
 //import org.bukkit.entity.Entity;
 //import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 //import org.bukkit.event.block.Action;
 //import org.bukkit.event.block.BlockBreakEvent;
 //import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -47,11 +44,10 @@ import org.bukkit.event.Listener;
 //import org.bukkit.event.player.PlayerInteractEvent;
 //import org.bukkit.event.player.PlayerItemConsumeEvent;
 //import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 //import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 //import org.bukkit.inventory.ItemStack;
-import java.awt.*;
 //import java.util.Collection;
 //import java.util.Collections;
 import java.io.*;
@@ -60,10 +56,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.bukkit.inventory.*;
+
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.jetbrains.annotations.NotNull;
-import org.yaml.snakeyaml.Yaml;
+import org.example.makispl.makispl.listeners.BlockBreakListener;
+import org.example.makispl.makispl.listeners.PlayerDeathListener;
+import org.example.makispl.makispl.listeners.PlayerJoinListener;
 
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
@@ -71,7 +68,7 @@ import static io.papermc.paper.command.brigadier.Commands.literal;
 import java.util.Scanner;
 
 public final class Makispl extends JavaPlugin {
-    boolean ENABLE_DC_BOT=false;
+
     private Makispl plugin;
     private JDA jda;
     Map<String, String> configMap = new HashMap<>();
@@ -103,6 +100,7 @@ public final class Makispl extends JavaPlugin {
     } catch (FileNotFoundException e) {
         e.printStackTrace();
     }
+    boolean ENABLE_DC_BOT= Boolean.parseBoolean(configMap.getOrDefault("ENABLE_DC_BOT", "false"));
     final long targetChannelId = Long.parseLong(configMap.getOrDefault("TARGET_CHANNEL_ID", "1"));
         // 1446543469723259104L
     if (ENABLE_DC_BOT) {
@@ -197,7 +195,7 @@ public final class Makispl extends JavaPlugin {
         });}
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
     }
     public static class DiscordCommandListener extends ListenerAdapter {
         private final Makispl plugin;
