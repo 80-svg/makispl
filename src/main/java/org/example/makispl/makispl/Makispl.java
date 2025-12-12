@@ -68,7 +68,7 @@ import static io.papermc.paper.command.brigadier.Commands.literal;
 import java.util.Scanner;
 
 public final class Makispl extends JavaPlugin {
-
+    public CustomCrafting customRecipe = new CustomCrafting(this);
     private Makispl plugin;
     private JDA jda;
     Map<String, String> configMap = new HashMap<>();
@@ -196,6 +196,8 @@ public final class Makispl extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().addRecipe(customRecipe.emeraldShovel());
+        getServer().addRecipe(customRecipe.emeraldHoe());
     }
     public static class DiscordCommandListener extends ListenerAdapter {
         private final Makispl plugin;
