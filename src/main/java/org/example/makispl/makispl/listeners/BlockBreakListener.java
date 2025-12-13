@@ -18,29 +18,31 @@ public class BlockBreakListener implements Listener {
             e.setExpToDrop(6);
         }
 //            getLogger().info("Block broken: " + block.getType() + " by " + e.getPlayer().getName() + " at " + block.getLocation());
-        switch (block.getType()) {
-            case IRON_ORE:
-            case DEEPSLATE_IRON_ORE:
-                ItemStack ironIngot = new ItemStack(Material.IRON_INGOT, 1);
-                e.setDropItems(false);
-                e.getPlayer().getInventory().addItem(ironIngot);
-                e.setExpToDrop(2);
-                break;
-            case GOLD_ORE:
-            case DEEPSLATE_GOLD_ORE:
-                ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT, 1);
-                e.setDropItems(false);
-                e.getPlayer().getInventory().addItem(goldIngot);
-                e.setExpToDrop(2);
-                break;
-            case COPPER_ORE:
-            case DEEPSLATE_COPPER_ORE:
-                ItemStack copperIngot = new ItemStack(Material.COPPER_INGOT, 1);
-                e.setDropItems(false);
-                e.getPlayer().getInventory().addItem(copperIngot);
-                e.setExpToDrop(500);
-            default:
-                break;
+        if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            switch (block.getType()) {
+                case IRON_ORE:
+                case DEEPSLATE_IRON_ORE:
+                    ItemStack ironIngot = new ItemStack(Material.IRON_INGOT, 1);
+                    e.setDropItems(false);
+                    e.getPlayer().getInventory().addItem(ironIngot);
+                    e.setExpToDrop(2);
+                    break;
+                case GOLD_ORE:
+                case DEEPSLATE_GOLD_ORE:
+                    ItemStack goldIngot = new ItemStack(Material.GOLD_INGOT, 1);
+                    e.setDropItems(false);
+                    e.getPlayer().getInventory().addItem(goldIngot);
+                    e.setExpToDrop(2);
+                    break;
+                case COPPER_ORE:
+                case DEEPSLATE_COPPER_ORE:
+                    ItemStack copperIngot = new ItemStack(Material.COPPER_INGOT, 1);
+                    e.setDropItems(false);
+                    e.getPlayer().getInventory().addItem(copperIngot);
+                    e.setExpToDrop(250);
+                default:
+                    break;
+        }
         }
     }
 }
