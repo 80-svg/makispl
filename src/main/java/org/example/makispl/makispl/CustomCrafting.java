@@ -26,7 +26,9 @@ public class CustomCrafting {
         NamespacedKey key = new NamespacedKey(plugin, "emerald_shovel");
         ShapedRecipe recipe = new ShapedRecipe(key, item);
 
-        recipe.shape(" E ", " S ", " S ");
+        recipe.shape(" E ",
+                     " S ",
+                     " S ");
 
         recipe.setIngredient('S',Material.STICK);
         recipe.setIngredient('E', Material.EMERALD);
@@ -41,7 +43,9 @@ public class CustomCrafting {
         NamespacedKey key = new NamespacedKey(plugin, "emerald_hoe");
         ShapedRecipe recipe = new ShapedRecipe(key, item);
 
-        recipe.shape(" EE", " S ", " S ");
+        recipe.shape(" EE",
+                     " S ",
+                     " S ");
 
         recipe.setIngredient('S', Material.STICK);
         recipe.setIngredient('E', Material.EMERALD);
