@@ -14,8 +14,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.example.makispl.makispl.commands.coinflip;
 import org.example.makispl.makispl.listeners.BlockBreakListener;
 import org.example.makispl.makispl.listeners.PlayerDeathListener;
 import org.example.makispl.makispl.listeners.PlayerJoinListener;
@@ -30,13 +32,16 @@ public final class Makispl extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-    boolean ENABLE_DC_BOT= Boolean.parseBoolean(getConfig().getString("ENABLE_DC_BOT"));
-    final long targetChannelId = Long.parseLong(getConfig().getString("TARGET_CHANNEL_ID"));
+        if (getConfig().getBoolean("coinflip")) {
+            this.getCommand("coinflip").setExecutor(new coinflip());
+        }
+    boolean ENABLE_DC_BOT= getConfig().getBoolean("ENABLE_DC_BOT");
         // 1446543469723259104L
     if (ENABLE_DC_BOT) {
         try {
             // 1. Login to discord
             EnumSet<GatewayIntent> intents = EnumSet.noneOf(GatewayIntent.class);
+            long targetChannelId = Long.parseLong(Objects.requireNonNull(getConfig().getString("TARGET_CHANNEL_ID")));
             String BOT_TOKEN = getConfig().getString("BOT_TOKEN");
             // MTQ0NjU0MzU3MzkwNTQ0MDc5OQ.GWDWFL._puyxFdNogj3wJSIATVcfGQ0F9g9HQZFo1pZUY
             jda = JDABuilder.createLight(BOT_TOKEN, intents)

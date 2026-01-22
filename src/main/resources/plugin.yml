@@ -9,6 +9,8 @@ commands:
     permission-message: Secret!!!
   getcoords:
     permission: makispl.getcoords
+  coinflip:
+    description: Flips a coin
 permissions:
   makispl.gethearts:
     description: Allows someone to do /gethearts
