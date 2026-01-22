@@ -40,7 +40,7 @@ public final class Makispl extends JavaPlugin {
         try {
             // 1. Login to discord
             EnumSet<GatewayIntent> intents = EnumSet.noneOf(GatewayIntent.class);
-            long targetChannelId = Long.parseLong(Objects.requireNonNull(getConfig().getString("TARGET_CHANNEL_ID")));
+            long targetChannelId = getConfig().getLong("TARGET_CHANNEL_ID");
             String BOT_TOKEN = getConfig().getString("BOT_TOKEN");
             jda = JDABuilder.createLight(BOT_TOKEN, intents)
                     .addEventListeners(new DiscordCommandListener(this))
@@ -71,6 +71,7 @@ public final class Makispl extends JavaPlugin {
                                                             Component.text(playerName + " is wrong or offline")
                                                                     .color(NamedTextColor.RED)
                                                     );
+                                                    return 0;
                                                 }
                                                 assert targetPlayer != null;
                                                 double health = targetPlayer.getHealth();
@@ -97,6 +98,7 @@ public final class Makispl extends JavaPlugin {
                                                             Component.text(playerName + " is wrong or offline")
                                                                     .color(NamedTextColor.RED)
                                                     );
+                                                    return 0;
                                                 }
                                                 assert targetPlayer != null;
                                                 ctx.getSource().getSender().sendMessage(
@@ -162,14 +164,18 @@ public final class Makispl extends JavaPlugin {
             });
         }
     }
-    public Makispl getPlugin() {
-        return plugin;
-    }
+    // Plugin getter
+    public Makispl getPlugin() {return plugin;}
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         if (jda != null) {
-            jda.shutdown();
+            jda.shutdownNow();
+            try {
+                jda.awaitShutdown();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
