@@ -23,7 +23,7 @@ import org.example.makispl.makispl.listeners.PlayerDeathListener;
 import org.example.makispl.makispl.listeners.PlayerJoinListener;
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
-
+// a
 public final class Makispl extends JavaPlugin {
     public CustomCrafting customRecipe = new CustomCrafting(this);
     private Makispl plugin;
