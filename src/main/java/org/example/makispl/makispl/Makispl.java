@@ -33,14 +33,14 @@ public final class Makispl extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         if (getConfig().getBoolean("coinflip")) {
-            this.getCommand("coinflip").setExecutor(new coinflip());
+            Objects.requireNonNull(this.getCommand("coinflip")).setExecutor(new coinflip());
         }
     boolean ENABLE_DC_BOT= getConfig().getBoolean("ENABLE_DC_BOT");
     if (ENABLE_DC_BOT) {
         try {
             // 1. Login to discord
             EnumSet<GatewayIntent> intents = EnumSet.noneOf(GatewayIntent.class);
-            long targetChannelId = getConfig().getLong("TARGET_CHANNEL_ID");
+//            long targetChannelId = getConfig().getLong("TARGET_CHANNEL_ID");
             String BOT_TOKEN = getConfig().getString("BOT_TOKEN");
             jda = JDABuilder.createLight(BOT_TOKEN, intents)
                     .addEventListeners(new DiscordCommandListener(this))
@@ -73,7 +73,6 @@ public final class Makispl extends JavaPlugin {
                                                     );
                                                     return 0;
                                                 }
-                                                assert targetPlayer != null;
                                                 double health = targetPlayer.getHealth();
                                                 double hearts = health / 2.0f;
                                                 ctx.getSource().getSender().sendMessage(
@@ -100,7 +99,6 @@ public final class Makispl extends JavaPlugin {
                                                     );
                                                     return 0;
                                                 }
-                                                assert targetPlayer != null;
                                                 ctx.getSource().getSender().sendMessage(
                                                         Component.text(playerName + "'s location: " + targetPlayer.getLocation())
                                                                 .color(NamedTextColor.BLACK)
