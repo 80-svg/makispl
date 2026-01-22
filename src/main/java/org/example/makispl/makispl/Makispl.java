@@ -18,16 +18,26 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.example.makispl.makispl.commands.coinflip;
+import org.example.makispl.makispl.commands.keepinv;
 import org.example.makispl.makispl.listeners.BlockBreakListener;
 import org.example.makispl.makispl.listeners.PlayerDeathListener;
 import org.example.makispl.makispl.listeners.PlayerJoinListener;
 import static io.papermc.paper.command.brigadier.Commands.argument;
 import static io.papermc.paper.command.brigadier.Commands.literal;
-// a
 public final class Makispl extends JavaPlugin {
     public CustomCrafting customRecipe = new CustomCrafting(this);
     private Makispl plugin;
     private JDA jda;
+
+    public boolean isKeepInv() {
+        return keepInv;
+    }
+
+    public void setKeepInv(boolean keepInv) {
+        this.keepInv = keepInv;
+    }
+
+    private boolean keepInv;
 //    Map<String, String> configMap = new HashMap<>();
     @Override
     public void onEnable() {
@@ -128,9 +138,10 @@ public final class Makispl extends JavaPlugin {
         });}
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
         getServer().addRecipe(customRecipe.emeraldShovel());
         getServer().addRecipe(customRecipe.emeraldHoe());
+        Objects.requireNonNull(this.getCommand("keepinv")).setExecutor(new keepinv(this));
     }
     public static class DiscordCommandListener extends ListenerAdapter {
         private final Makispl plugin;

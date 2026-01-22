@@ -9,13 +9,18 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.example.makispl.makispl.Makispl;
 
 public class PlayerDeathListener implements Listener {
+    final Makispl makispl;
+
+    public PlayerDeathListener(Makispl makispl) {
+        this.makispl = makispl;
+    }
 
     public ItemStack getPlayerHead(String playerName) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta meta = (SkullMeta) head.getItemMeta();
-
         // Choose whose skull is it
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
         head.setItemMeta(meta);
@@ -26,5 +31,10 @@ public class PlayerDeathListener implements Listener {
         String playerName = event.getPlayer().getName(); // Get playerName
         ItemStack skull = getPlayerHead(playerName); // Get playerSkull
         event.getDrops().add(skull); // Drop the skull
+
+        if (makispl.isKeepInv()) {
+            event.setKeepInventory(true);
+            event.getDrops().clear();
+        }
     }
 }

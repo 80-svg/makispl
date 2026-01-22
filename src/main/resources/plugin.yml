@@ -11,6 +11,8 @@ commands:
     permission: makispl.getcoords
   coinflip:
     description: Flips a coin
+  keepinv:
+    description: keeps inv
 permissions:
   makispl.gethearts:
     description: Allows someone to do /gethearts
