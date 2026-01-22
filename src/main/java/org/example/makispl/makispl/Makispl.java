@@ -36,14 +36,12 @@ public final class Makispl extends JavaPlugin {
             this.getCommand("coinflip").setExecutor(new coinflip());
         }
     boolean ENABLE_DC_BOT= getConfig().getBoolean("ENABLE_DC_BOT");
-        // 1446543469723259104L
     if (ENABLE_DC_BOT) {
         try {
             // 1. Login to discord
             EnumSet<GatewayIntent> intents = EnumSet.noneOf(GatewayIntent.class);
             long targetChannelId = Long.parseLong(Objects.requireNonNull(getConfig().getString("TARGET_CHANNEL_ID")));
             String BOT_TOKEN = getConfig().getString("BOT_TOKEN");
-            // MTQ0NjU0MzU3MzkwNTQ0MDc5OQ.GWDWFL._puyxFdNogj3wJSIATVcfGQ0F9g9HQZFo1pZUY
             jda = JDABuilder.createLight(BOT_TOKEN, intents)
                     .addEventListeners(new DiscordCommandListener(this))
                     .build();
