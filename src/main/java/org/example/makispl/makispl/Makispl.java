@@ -18,6 +18,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.example.makispl.makispl.commands.coinflip;
+import org.example.makispl.makispl.commands.getcoords;
+import org.example.makispl.makispl.commands.gethearts;
 import org.example.makispl.makispl.commands.keepinv;
 import org.example.makispl.makispl.listeners.BlockBreakListener;
 import org.example.makispl.makispl.listeners.PlayerDeathListener;
@@ -42,9 +44,6 @@ public final class Makispl extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        if (getConfig().getBoolean("coinflip")) {
-            Objects.requireNonNull(this.getCommand("coinflip")).setExecutor(new coinflip());
-        }
     boolean ENABLE_DC_BOT= getConfig().getBoolean("ENABLE_DC_BOT");
     if (ENABLE_DC_BOT) {
         try {
@@ -68,55 +67,6 @@ public final class Makispl extends JavaPlugin {
         plugin = this;
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-
-            commands.register(
-                    literal("gethearts")
-                            .then(
-                                    argument("player", StringArgumentType.greedyString())
-                                            .executes(ctx -> {
-                                                final String playerName = ctx.getArgument("player", String.class);
-                                                Player targetPlayer = this.getServer().getPlayer(playerName);
-                                                if (targetPlayer == null) {
-                                                    ctx.getSource().getSender().sendMessage(
-                                                            Component.text(playerName + " is wrong or offline")
-                                                                    .color(NamedTextColor.RED)
-                                                    );
-                                                    return 0;
-                                                }
-                                                double health = targetPlayer.getHealth();
-                                                double hearts = health / 2.0f;
-                                                ctx.getSource().getSender().sendMessage(
-                                                        Component.text(playerName + "'s health: " + health + " (" + hearts + " hearts)")
-                                                                .color(NamedTextColor.BLACK)
-                                                );
-                                                return 1;
-                                            })
-                            )
-                            .build(),
-                    "Gets the hp of said player"
-            );
-            commands.register(
-                    literal("getcoords")
-                            .then(
-                                    argument("player", StringArgumentType.greedyString())
-                                            .executes(ctx -> {
-                                                final String playerName = ctx.getArgument("player", String.class);
-                                                Player targetPlayer = this.getServer().getPlayer(playerName);
-                                                if (targetPlayer == null) {
-                                                    ctx.getSource().getSender().sendMessage(
-                                                            Component.text(playerName + " is wrong or offline")
-                                                                    .color(NamedTextColor.RED)
-                                                    );
-                                                    return 0;
-                                                }
-                                                ctx.getSource().getSender().sendMessage(
-                                                        Component.text(playerName + "'s location: " + targetPlayer.getLocation())
-                                                                .color(NamedTextColor.BLACK)
-                                                );
-                                                return 1;
-                                            })
-                            ).build(), "Gets the coordinates of a player"
-            );
             var command = literal("onlineplayers")
                     .executes(commandContext -> {
                        String playerList = Bukkit.getOnlinePlayers().stream()
@@ -142,6 +92,11 @@ public final class Makispl extends JavaPlugin {
         getServer().addRecipe(customRecipe.emeraldShovel());
         getServer().addRecipe(customRecipe.emeraldHoe());
         Objects.requireNonNull(this.getCommand("keepinv")).setExecutor(new keepinv(this));
+        if (getConfig().getBoolean("coinflip")) {
+            Objects.requireNonNull(this.getCommand("coinflip")).setExecutor(new coinflip());
+        }
+        Objects.requireNonNull(this.getCommand("getcoords")).setExecutor(new getcoords());
+        Objects.requireNonNull(this.getCommand("gethearts")).setExecutor(new gethearts());
     }
     public static class DiscordCommandListener extends ListenerAdapter {
         private final Makispl plugin;
