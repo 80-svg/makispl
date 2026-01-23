@@ -20,6 +20,7 @@ dependencies {
         exclude module: 'opus-java'
         exclude module: 'tink'
     }
+    compileOnly("net.luckperms:api:5.4")
 //    implementation("org.yaml.snakeyaml:2.2")
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
 }
